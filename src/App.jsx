@@ -10,15 +10,15 @@ function App() {
   useEffect(() => {
     async function fetchPokemon() {
       try {
-        let pokemon = await Promise.all(getRandomList().map(id => getPokemon(id)));
-        setPokemon(pokemon);
-        console.log(pokemon.map(p => p.name));
+        let responses = await Promise.all(getRandomList().map(id => getPokemon(id)));
+        setPokemon(responses);
+        console.log(responses.map(p => p.name));
       } catch(e) {
         console.log(e);
       }
       // let json = await getPokemon(5);
       // console.log(json);
-      // // pokemon.push({name: json.name, sprite: json.sprites.front_default});
+      // pokemon.push({name: json.name, sprite: json.sprites.front_default});
       // pokemon.push(json);
     }
 
@@ -33,14 +33,25 @@ function App() {
         <h2>High Score: {highScore}</h2>
       </section>
       <section id="center"></section>
-      <CardsContainer></CardsContainer>
+      <CardsContainer pokemon={pokemon}></CardsContainer>
       <section id="spacer"></section>
     </>
   );
 }
 
-function CardsContainer() {
-  return <section id="cards"></section>;
+function CardsContainer({ pokemon }) {
+  return <section id="cards">
+      {pokemon.map(p => {
+        return <Card key={p.id} name={p.name} sprite={p.sprites.front_default}></Card>
+      })}
+  </section>;
+}
+
+function Card({name, sprite}) {
+  return <div className="card">
+    <p>{name[0].toUpperCase() + name.slice(1)}</p>
+    <img src={sprite} alt={name} />
+  </div>
 }
 
 export default App;
