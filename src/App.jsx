@@ -6,13 +6,13 @@ function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [pokemon, setPokemon] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     async function fetchPokemon() {
       try {
         let responses = await Promise.all(getRandomList().map(id => getPokemon(id)));
         setPokemon(responses);
-        // console.log(responses.map(p => p.name));
       } catch(e) {
         console.log(e);
       }
@@ -21,6 +21,19 @@ function App() {
     fetchPokemon();
   }, []);
 
+  function onClick(e) {
+    const id = e.target.closest("div.card").dataset.id;
+    if (!selected.find(i => i === id)) {
+      setScore(score + 1);
+      setSelected([...selected, id]);
+    }
+    else {
+      
+    }
+    
+    setPokemon(shuffle(pokemon.slice()));
+  }
+
   return (
     <>
       <h1>Memory Card</h1>
@@ -28,27 +41,27 @@ function App() {
         <h2>Score: {score}</h2>
         <h2>High Score: {highScore}</h2>
       </section>
-      <section id="center"><CardsContainer pokemon={pokemon}></CardsContainer></section>
+      <section id="center"><CardsContainer pokemon={pokemon} onClick={onClick}></CardsContainer></section>
       
       <section id="spacer"></section>
     </>
   );
 }
 
-function CardsContainer({ pokemon }) {
-  return <section className="cards">
+function CardsContainer({ pokemon, onClick }) {
+  return <section className="cards" onClick={onClick}>
       {pokemon.map(p => {
-        return <Card key={p.id} name={p.name} sprite={p.sprites.front_default}></Card>
+        return <Card key={p.id} id={p.id} name={p.species.name} sprite={p.sprites.other.showdown.front_default}></Card>
       })}
   </section>;
 }
 
-function Card({name, sprite}) {
+function Card({id, name, sprite}) {
   if (name.includes('-')) {
     let index = name.indexOf('-') + 1;
     name = name.substring(0, index) + name[index].toUpperCase() + name.substring(index + 1);
   }
-  return <div className="card">
+  return <div className="card" data-id={id}>
     <img src={sprite} alt={name} />
     <p>{name[0].toUpperCase() + name.slice(1)}</p>
   </div>

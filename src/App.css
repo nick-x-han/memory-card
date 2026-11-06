@@ -68,6 +68,10 @@
     justify-self: flex-end;
   }
 
+  & > img {
+    height: 75px;
+  }
+
   &:hover {
     background-color: gray;
     & > p {
