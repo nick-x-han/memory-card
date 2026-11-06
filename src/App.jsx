@@ -12,14 +12,10 @@ function App() {
       try {
         let responses = await Promise.all(getRandomList().map(id => getPokemon(id)));
         setPokemon(responses);
-        console.log(responses.map(p => p.name));
+        // console.log(responses.map(p => p.name));
       } catch(e) {
         console.log(e);
       }
-      // let json = await getPokemon(5);
-      // console.log(json);
-      // pokemon.push({name: json.name, sprite: json.sprites.front_default});
-      // pokemon.push(json);
     }
 
     fetchPokemon();
@@ -48,6 +44,10 @@ function CardsContainer({ pokemon }) {
 }
 
 function Card({name, sprite}) {
+  if (name.includes('-')) {
+    let index = name.indexOf('-') + 1;
+    name = name.substring(0, index) + name[index].toUpperCase() + name.substring(index + 1);
+  }
   return <div className="card">
     <img src={sprite} alt={name} />
     <p>{name[0].toUpperCase() + name.slice(1)}</p>
