@@ -32,15 +32,15 @@ function App() {
         <h2>Score: {score}</h2>
         <h2>High Score: {highScore}</h2>
       </section>
-      <section id="center"></section>
-      <CardsContainer pokemon={pokemon}></CardsContainer>
+      <section id="center"><CardsContainer pokemon={pokemon}></CardsContainer></section>
+      
       <section id="spacer"></section>
     </>
   );
 }
 
 function CardsContainer({ pokemon }) {
-  return <section id="cards">
+  return <section className="cards">
       {pokemon.map(p => {
         return <Card key={p.id} name={p.name} sprite={p.sprites.front_default}></Card>
       })}
@@ -49,8 +49,8 @@ function CardsContainer({ pokemon }) {
 
 function Card({name, sprite}) {
   return <div className="card">
-    <p>{name[0].toUpperCase() + name.slice(1)}</p>
     <img src={sprite} alt={name} />
+    <p>{name[0].toUpperCase() + name.slice(1)}</p>
   </div>
 }
 

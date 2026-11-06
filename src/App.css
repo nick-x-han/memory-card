@@ -39,3 +39,32 @@
     height: 48px;
   }
 }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  place-content: center;
+  place-items: center;
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+}
+
+.card {
+  border: 2px solid gray;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > p {
+    background-color: gray;
+    align-self: stretch;
+    color: black;
+    justify-self: flex-end;
+  }
+}
