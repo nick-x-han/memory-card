@@ -58,7 +58,7 @@
   height: 160px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   & > p {
@@ -69,7 +69,8 @@
   }
 
   & > img {
-    height: 75px;
+    max-height: 75px;
+    margin-top: 25%;
   }
 
   &:hover {

@@ -27,7 +27,7 @@ function App() {
     
     return () => {
       ignore = true;
-    }
+    };
   }, [attempts]);
 
   function onClick(e) {
@@ -35,12 +35,13 @@ function App() {
     if (!card) return;
     const id = card.dataset.id;
     const newScore = score + 1;
-    if (!selected.find((i) => i === id)) {
+    if (!selected.includes(id)) {
       setScore(newScore);
       if (newScore > highScore) {
         setHighScore(newScore);
       }
       setSelected([...selected, id]);
+      setPokemon(shuffle(pokemon.slice()));
       // if (score === CARDS_PER_GAME) {
 
       // }
@@ -48,9 +49,10 @@ function App() {
       setScore(0);
       setSelected([]);
       setAttempts(attempts + 1);
+      setPokemon([]);
     }
 
-    setPokemon(shuffle(pokemon.slice()));
+    
   }
 
   return (
