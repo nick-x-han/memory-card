@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { getPokemon, getRandomList, shuffle } from "./utils";
 import "./App.css";
-import { CARDS_PER_GAME } from "./constants";
+// import { CARDS_PER_GAME } from "./constants";
 
 function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [pokemon, setPokemon] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [attempts, setAttempts] = useState(1);
 
   useEffect(() => {
     async function fetchPokemon() {
@@ -22,7 +23,7 @@ function App() {
     }
 
     fetchPokemon();
-  }, []);
+  }, [attempts]);
 
   function onClick(e) {
     const id = e.target.closest("div.card").dataset.id;
@@ -33,11 +34,13 @@ function App() {
         setHighScore(newScore);
       }
       setSelected([...selected, id]);
-      if (score === CARDS_PER_GAME) {
-      }
+      // if (score === CARDS_PER_GAME) {
+
+      // }
     } else {
       setScore(0);
       setSelected([]);
+      setAttempts(attempts + 1);
     }
 
     setPokemon(shuffle(pokemon.slice()));
