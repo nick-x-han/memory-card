@@ -1,23 +1,15 @@
-import { useEffect, useState } from "react";
 import { TOTAL_POKEMON, CARDS_PER_GAME } from "./constants";
 
-function useData(url) {
-  const [data, setData] = useState(null);
+async function getPokemon(id) {
+  let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
 
-  useEffect(() => {
-    let ignore = false;
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        if (!ignore) {
-          setData(json);
-        }
-      });
-    return () => {
-      ignore = true;
-    };
-  }, [url]);
-  return data;
+  if (!response.ok) {
+    console.log("DSDDSDS")
+    throw new Error(`HTTP error: ${response.status}`);
+  }
+
+  let json = await response.json();
+  return json;
 }
 
 function getRandomList() {
@@ -37,4 +29,4 @@ function shuffle(array) {
   return array;
 }
 
-export { useData, getRandomList, shuffle };
+export { getPokemon, getRandomList, shuffle };
