@@ -26,7 +26,9 @@ function App() {
   }, [attempts]);
 
   function onClick(e) {
-    const id = e.target.closest("div.card").dataset.id;
+    const card = e.target.closest("div.card");
+    if (!card) return;
+    const id = card.dataset.id;
     const newScore = score + 1;
     if (!selected.find((i) => i === id)) {
       setScore(newScore);
