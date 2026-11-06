@@ -11,18 +11,23 @@ function App() {
   const [attempts, setAttempts] = useState(1);
 
   useEffect(() => {
+    let ignore = false;
     async function fetchPokemon() {
       try {
         let responses = await Promise.all(
           getRandomList().map((id) => getPokemon(id)),
         );
-        setPokemon(responses);
+        if (!ignore) setPokemon(responses);
       } catch (e) {
         console.log(e);
       }
     }
 
     fetchPokemon();
+    
+    return () => {
+      ignore = true;
+    }
   }, [attempts]);
 
   function onClick(e) {
