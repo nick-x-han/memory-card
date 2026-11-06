@@ -74,4 +74,11 @@
       color: red;
     }
   }
+
+  &:active {
+    background-color: white;
+    & > p {
+      background-color: white;
+    }
+  }
 }
