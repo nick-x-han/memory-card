@@ -67,4 +67,11 @@
     color: black;
     justify-self: flex-end;
   }
+
+  &:hover {
+    background-color: gray;
+    & > p {
+      color: red;
+    }
+  }
 }
